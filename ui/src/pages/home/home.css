@@ -1,0 +1,57 @@
+.Home{
+    max-width: 100%;
+    padding: 8em;
+    & .ServerInfo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        & table{
+            border-collapse: separate;
+            border-spacing: 0;
+            border: 0.5px solid black;
+            border-radius: 5px;
+            overflow: hidden;
+            & tbody{
+                & tr{
+                    column-gap: 0;
+                    
+                    padding: 0.5em;
+                    & td{
+
+                        border: 0.5px solid black;
+                        padding: 0.5em;
+                        font-size: 2rem;
+                    }
+                }
+            }
+        }
+    } 
+    & .JWTInfo{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        padding: 20em;
+        & h1{
+            font-size: 2rem;
+            color: rgb(37, 37, 37);
+        }
+    }
+}
+.status{
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}
+.error{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: red;
+}
+.good{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: greenyellow;
+}

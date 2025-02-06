@@ -1,0 +1,28 @@
+.Login{
+    & form{
+        display: flex;
+        gap: 20em;
+        align-items: center;
+        & .inputContainer{
+            display: flex;
+            flex-direction: column;
+            & label{
+                font-size: 2rem;
+            }
+            & input{
+                font-size: 2rem;
+                padding: 0.5em;
+            }
+            & button{
+                font-size: 2rem;
+                font-weight: 600;
+                padding: 0.4em 0.8em;
+                margin-top: 1.2em;
+                background-color: rgb(22, 22, 165);
+                border: none;
+                border-radius: 0.2em;
+                color: white;
+            }
+        }
+    }
+}
