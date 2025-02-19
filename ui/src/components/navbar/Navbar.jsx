@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './navbar.css'
 import { Link } from 'react-router-dom'
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export default function Navbar() {
     const [handburger, setHandburger] = useState(false);
@@ -11,22 +13,12 @@ export default function Navbar() {
   return (
     <div className='Navbar'>
         <div className="left">
-            <div className="logo">
-                <span>Logo Here!</span>
-            </div>
+            <span className="text">Hii, Welcome</span>
         </div>
         <div className="right">
-            <div className="handBurger" onClick={()=>Handburger()}>
-                <div className="line"></div>
-                <div className="line"></div>
-                <div className="line"></div>
-            </div>
             <ul className={handburger?'active':''}>
-                <li><Link className='link' to="/">Home</Link></li>
-                <li><Link className='link' to="/about">About</Link></li>
-                <li><Link className='link'>Sign In</Link></li>
-                <li><Link className='link'>Sign Up</Link></li>
-                
+                <li><NotificationsIcon fontSize='12rem'/></li>
+                <li><AccountCircleIcon fontSize='12rem'/></li>
             </ul>
             
         </div>

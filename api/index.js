@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 //jsonwebtoken setup
 const cookieParser = require('cookie-parser');
 const authRoutes = require("./routes/auth");
+const transactionRoutes = require("./routes/transactions");
 const { verifyToken } = require("./lib/jwtAuth");
 dotenv.config();
 
@@ -25,6 +26,7 @@ app.use(express.json());
 
 
 app.use("/auth", authRoutes);
+app.use("/transactions", transactionRoutes);
 
 app.get("/dashboard", verifyToken, (req, res)=> {
     res.json({ message: `Welcome, ${req.user.username}!` });

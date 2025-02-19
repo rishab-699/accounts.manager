@@ -3,12 +3,15 @@ import './home.css';
 import axios from 'axios';
 import Login from '../../components/login/Login';
 import API from '../../lib/auth';
+import Transactions from '../../components/transactions/Transactions';
+import Card from '../../components/card/Card';
 
 
 export default function Home() {
   const [server, setServer] = useState('Server is not live!');
   const [status, setStatus] = useState('error');
   const [jwtresponse, setJwtResponse]= useState({message:'No Token Generated'});
+  const [transactions, setTransactions] = useState([]);
   useEffect(()=>{
     const getData = async()=>{
       try {
@@ -40,22 +43,73 @@ export default function Home() {
       }
     };
     fetchDashboard();
+
+    const transactions = async()=>{
+      const getTransaction = await axios.get("/transactions/");
+      if(getTransaction.status === 200){
+        console.log(getTransaction.data);
+        setTransactions(getTransaction.data);
+        
+      }else{
+        console.log(getTransaction.status)
+      }
+    }
+    transactions();
   },[]);
+
+  
   return (
     <div className='Home'>
-      <div className="ServerInfo">
-        <table>
-          <tbody>
-            <tr>
-              <td>Server Info:</td>
-              <td className='status'><div className={status}></div> {server}</td>
-            </tr>
-            <tr>
-              <td>Description:</td>
-              <td>The server is a basic Express Server with facility to connect to mongodb account</td>
-            </tr>
-          </tbody>
-        </table>
+      <div className="quickAction">
+        <Card
+          title={'Sales'}
+          value={'100000'}
+          description={'this month'}
+        />
+        <Card
+          title={'Purchases'}
+          value={'100000'}
+          description={'this month'}
+        />
+        <Card
+          title={'Expenses'}
+          value={'100000'}
+          description={'this month'}
+        />
+      </div>
+      <div className="transactions-entry">
+        <span className="head">New Transaction</span>
+        <Transactions/>
+      </div>
+      
+      <div className="view-transactions">
+      <table>
+        <thead>
+          <tr>
+            <th>sl. no</th>
+            <th>Date</th>
+            <th>Book</th>
+            <th>Debit (&#8377;)</th>
+            <th>Credit (&#8377;)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            transactions.length!==0 ? transactions.map((value, index)=>{
+              return <tr key={index}>
+                <td>{index+1}</td>
+              <td>{value.date}</td>
+              <td>{value.book}<br/>
+                <p className='desc'><b>Description</b>: {value.description}</p> 
+              </td>
+              <td>{value.type === "dr"? value.amount: '-'}</td>
+              <td>{value.type === "cr"? value.amount: '-'}</td></tr>
+            }): <tr><td>No Data</td></tr>
+          }
+          
+        </tbody>
+      </table>
+
       </div>
       <div className="JWTInfo">
         <Login/>

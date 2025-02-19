@@ -1,31 +1,87 @@
 .Home{
     max-width: 100%;
     padding: 8em;
-    & .ServerInfo{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    & .quickAction{
+        padding: 24em 12em;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        gap: 64em;
+    }
+    & .transactions-entry{
+        background-color: #fff;
+        padding: 22em;
+        border-radius: 8em;
+        box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        & .head{
+            font-size: 2rem;
+            font-weight: 700;
+            color: #5d5d5d;
+        }
+    }
+    & .view-transactions{
+        background-color: #fff;
+        padding: 22em;
+        border-radius: 8em;
+        box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
         & table{
-            border-collapse: separate;
-            border-spacing: 0;
-            border: 0.5px solid black;
-            border-radius: 5px;
-            overflow: hidden;
+            width: 100%;
+            border-radius: 16px;
+            & thead{
+                border-bottom: 8px solid grey;
+                & tr{
+                    background-color: rgb(0, 0, 87);
+                    & th{
+                        padding: 8px 4px;
+                        text-align: center;
+                        border-bottom: 1px solid rgb(255, 255, 255);
+                        font-size: 2.5rem;
+                        font-weight: 600;
+                        color: rgb(255, 255, 255);
+                    }
+                }
+            }
             & tbody{
                 & tr{
-                    column-gap: 0;
-                    
-                    padding: 0.5em;
                     & td{
-
-                        border: 0.5px solid black;
-                        padding: 0.5em;
                         font-size: 2rem;
+                        font-weight: 600;
+                        color: #1d1d1d;
+                        border-bottom: 1px solid grey;
+                        border-right: 1px solid grey;
+                        padding: 2px 8px;
+                        & .desc{
+                            font-size: 1.5rem;
+                            margin-top: 8px;
+                            & b{
+                                font-size: 1.5rem;
+                            }
+                        }
+                        &:nth-child(1){
+                            text-align: center;
+                        }
+                        &:nth-child(3){
+                            min-width: 200px;
+                        }
+                        &:nth-child(2){
+                            text-align: center;
+                        }
+                        &:nth-child(4){
+                            text-align: center;
+                        }
+                        &:last-child{
+                            border-right: none;
+                            text-align: center;
+                        }
                     }
                 }
             }
         }
-    } 
+    }
     & .JWTInfo{
         display: flex;
         align-items: center;

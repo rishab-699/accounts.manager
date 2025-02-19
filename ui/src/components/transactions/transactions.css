@@ -1,0 +1,89 @@
+& .add-transactions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+    & form {
+        flex: 1;
+        padding: 5em;
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 12px; 
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        box-sizing: border-box;
+        & .inputRow {
+            display: flex;
+            gap: 32px;
+            width: 100%;
+            max-width: 700px;
+            margin-left: 2em;
+        }
+
+        & .inputContainer {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 350px; 
+            box-sizing: border-box;
+
+            & label {
+                font-size: 1.5rem;
+            }
+
+            & input,
+            & select {
+                font-size: 1.5rem;
+                padding: 0.5em;
+                color: #5d5d5d;
+                width: 100%; 
+                box-sizing: border-box;
+            }
+
+            & select {
+                & option {
+                    font-size: 1.5rem;
+                }
+            }
+
+            &.form-description {
+                width: 100%;
+                max-width: 700px; 
+                display: flex;
+                flex-direction: column;
+
+                & textarea {
+                    font-size: 1.5rem;
+                    padding: 0.5em;
+                    color: #5d5d5d;
+                    width: 100%;
+                    max-width: 100%;
+                    min-height: 100px; 
+                    resize: vertical; 
+                    box-sizing: border-box;
+                    overflow-y: auto; 
+                }
+            }
+
+            &.form-button {
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                & button {
+                    width: fit-content;
+                    font-size: 1.5rem;
+                    font-weight: 600;
+                    padding: 0.4em 0.8em;
+                    margin-top: 1.2em;
+                    background-color: rgb(22, 22, 165);
+                    border: none;
+                    border-radius: 0.2em;
+                    color: white;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
