@@ -1,0 +1,21 @@
+.suggestions{
+    padding: 8px;
+    list-style: none;
+    position: absolute;
+    top: 60px;
+    background-color: white;
+    z-index: 4;
+    box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+    cursor: pointer;
+    & li{
+        font-size: 1.5rem;
+        width: 100%;
+        cursor: pointer;
+        &:hover{
+            background-color: #dfdfdf;
+
+        }
+    }
+}

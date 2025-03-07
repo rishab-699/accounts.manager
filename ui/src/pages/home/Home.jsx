@@ -1,123 +1,168 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import './home.css';
 import axios from 'axios';
-import Login from '../../components/login/Login';
 import API from '../../lib/auth';
-import Transactions from '../../components/transactions/Transactions';
 import Card from '../../components/card/Card';
-
+import Addtransactions from '../../components/transactions/Addtransactions';
+import { Context } from '../../context/Contexts';
+import Transactiontable from '../../components/transactiontable/Transactiontable';
 
 export default function Home() {
-  const [server, setServer] = useState('Server is not live!');
-  const [status, setStatus] = useState('error');
-  const [jwtresponse, setJwtResponse]= useState({message:'No Token Generated'});
   const [transactions, setTransactions] = useState([]);
+  const [systemBooks, setSystemBooks] = useState([]);
+  const [checkBooks, setCheckBooks] = useState(true);
+  const [quickActionReports, setQuickActionReports] = useState();
+
+  const {user} = useContext(Context);
+  const {dispatch} = useContext(Context);
+  const hasFetched = useRef(false);
+  const [balances, setBalances] = useState({});
   useEffect(()=>{
-    const getData = async()=>{
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+    const checkBooks = async()=>{
       try {
-        const data = await axios.get('/api');
-        await API.post('/auth/register',{username: 'test', password: 'test'})
-        console.log(data);
-        if(data.status === 200){
-          setStatus('good');
-        }else{
-          status('error')
-        }
-        setServer(data.data);
-
-      } catch (error) {
-        console.log(error);
-        setServer('Something Went Wrong!')
-      }
-    }
-    getData();
-    const fetchDashboard = async () => {
-      try {
-
-          const res = await API.get("/dashboard");
-          console.log(res.data.message);
-          setJwtResponse(res.data);
-      } catch (error) {
-          console.error("Access denied!", error.response?.data);
-          setJwtResponse({message:'No Response'});
-      }
-    };
-    fetchDashboard();
-
-    const transactions = async()=>{
-      const getTransaction = await axios.get("/transactions/");
-      if(getTransaction.status === 200){
-        console.log(getTransaction.data);
-        setTransactions(getTransaction.data);
+        const bookData = await API.get(`/book/SystemDefined/${user.user._id}`);
+        //console.log(bookData.data);
         
-      }else{
-        console.log(getTransaction.status)
+        if(bookData.data.data.length === 0){
+          const bookData = await API.get(`/book/${user.user._id}`);
+          const getTransaction = await axios.get(`/transactions/${user.user._id}`);
+          const getQuickReports = await axios.get(`/reports/home/${user.user._id}`);
+          console.log(getQuickReports.data);
+          console.log(bookData.data);
+          await setSystemBooks(bookData.data);
+          await setTransactions(getTransaction.data);
+          await setQuickActionReports(getQuickReports?.data);
+          await setCheckBooks(true);
+        }else{
+          await setSystemBooks(bookData.data.data);
+          setCheckBooks(false);
+          //console.log(systemBooks); 
+        }
+      } catch (error) {
+          //console.log(error.status);
+          if(error.status === 403){
+            console.log(error.status);
+            dispatch({type: 'LOGOUT'});
+            return;
+        }
       }
+      
     }
-    transactions();
-  },[]);
+    checkBooks();
+  },[user.user._id, dispatch]);
 
-  
+  const handleInputChange = (e) => {
+    setBalances({ ...balances, [e.target.name]: e.target.value });
+};
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    //console.log(systemBooks);
+    //console.log(balances);
+    const updatedBooks = systemBooks.map(book => ({
+      bookId: book._id,
+      balance: balances[book.bookname + "balance"] || 0
+    }));
+    console.log(updatedBooks);
+    try {
+      await API.post("/book/updateBalances", { books: updatedBooks });
+      alert("Books updated successfully!");
+      window.location.href('/')
+    } catch (error) {
+      //console.log(error);
+      alert('Error updating books!');
+    }
+  }
   return (
     <div className='Home'>
-      <div className="quickAction">
-        <Card
-          title={'Sales'}
-          value={'100000'}
-          description={'this month'}
-        />
-        <Card
-          title={'Purchases'}
-          value={'100000'}
-          description={'this month'}
-        />
-        <Card
-          title={'Expenses'}
-          value={'100000'}
-          description={'this month'}
-        />
-      </div>
-      <div className="transactions-entry">
-        <span className="head">New Transaction</span>
-        <Transactions/>
-      </div>
-      
-      <div className="view-transactions">
-      <table>
-        <thead>
-          <tr>
-            <th>sl. no</th>
-            <th>Date</th>
-            <th>Book</th>
-            <th>Debit (&#8377;)</th>
-            <th>Credit (&#8377;)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            transactions.length!==0 ? transactions.map((value, index)=>{
-              return <tr key={index}>
-                <td>{index+1}</td>
-              <td>{value.date}</td>
-              <td>{value.book}<br/>
-                <p className='desc'><b>Description</b>: {value.description}</p> 
-              </td>
-              <td>{value.type === "dr"? value.amount: '-'}</td>
-              <td>{value.type === "cr"? value.amount: '-'}</td></tr>
-            }): <tr><td>No Data</td></tr>
-          }
-          
-        </tbody>
-      </table>
-
-      </div>
-      <div className="JWTInfo">
-        <Login/>
-        <div className="tokenDetails">
-          <h1>Token Status:</h1>
-          <h1>{jwtresponse.message}</h1>
+      {checkBooks?
+      <>
+        <div className="quickAction">
+          <Card
+            title={'Sales'}
+            value={quickActionReports?.length > 0? quickActionReports.map((value)=>{
+              return value.category==='sales' && value.totalAmount 
+            }):'0'}
+            description={'this month'}
+          />
+          <Card
+            title={'Purchases'}
+            value={quickActionReports?.length > 0? quickActionReports.map((value)=>{
+              return value.category==='purchases' && value.totalAmount 
+            }):'0'}
+            description={'this month'}
+          />
+          <Card
+            title={'Expenses'}
+            value={quickActionReports?.length > 0? quickActionReports.map((value)=>{
+              return value.category==='expenses'? value.totalAmount:0 
+            }):'0 '}
+            description={'this month'}
+          />
         </div>
+        <div className="salesChart">
+        </div>
+          <div className="view-Books">
+          <span className="head">Ledger Books</span>
+          <table>
+            <thead>
+              <tr>
+                <th>sl. no</th>
+                <th>Book Name</th>
+                <th>Balance</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                systemBooks.length!==0 ? systemBooks.map((value, index)=>{
+                  return <tr key={index}>
+                    <td>{index+1}</td>
+                  <td>{value.bookname}<br/>
+                    
+                  </td>
+                  <td>{"₹ "+value.balance}</td>
+                  
+                  </tr>
+                }): <tr>
+                      <td colSpan="5" className="no-data">No Data Available</td>
+                    </tr>
+              }
+              
+            </tbody>
+          </table>
+            
+          </div>
+        <div className="transactions-entry">
+          <span className="head">New Transaction</span>
+          <Addtransactions bookDetails={systemBooks}/>
+        </div>
+        
+        <Transactiontable transactions={transactions}/>
+      </>:
+      <div className="BookEntryCard">
+        <h1>Book Entry</h1>
+        <p>NOTE: Add opening balance of this necessary ledger books.
+        </p>
+        <form onSubmit={(e)=>handleSubmit(e)}>
+        {systemBooks && systemBooks.map((book) => (
+                    <div className="input-Row" key={book._id}>
+                        <label className="BookTitles">{book.bookname}</label>
+                        <input
+                            type="text"
+                            name={book.bookname + "balance"}
+                            placeholder="₹ 0000"
+                            onChange={handleInputChange}
+                        />
+                    </div>
+                ))}
+          
+          <div className="input-Row">
+            <button>Update</button>
+          </div>
+        </form>
       </div>
+      }
     </div>
   )
 }

@@ -3,9 +3,7 @@
     padding: 8em;
     justify-content: space-between;
     align-items: center;
-    position: sticky;
-    top:0;
-    z-index: 1;
+    
     & .left{
         & .text{
             font-size: 2rem;

@@ -1,0 +1,20 @@
+.transactionPage{
+    padding: 8em;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    & .transactions-entry{
+        background-color: #fff;
+        padding: 22em;
+        border-radius: 8em;
+        box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+        & .head{
+            font-size: 3rem;
+            font-weight: 700;
+            color: #5d5d5d;
+        }
+    }
+    
+}

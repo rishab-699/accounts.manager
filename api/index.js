@@ -6,6 +6,8 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const authRoutes = require("./routes/auth");
 const transactionRoutes = require("./routes/transactions");
+const bookRoutes = require("./routes/book");
+const reportsRoutes = require("./routes/reports");
 const { verifyToken } = require("./lib/jwtAuth");
 dotenv.config();
 
@@ -19,14 +21,14 @@ app.use(cors({
 app.use(cookieParser());
 
 //connect to mongodb server with adding database name in .env file
-/*mongoose.connect(process.env.MONGOURL, { dbName: process.env.MONGODATABASE })
+mongoose.connect(process.env.MONGOURL, { dbName: process.env.MONGODATABASE })
 .then(() => console.log("Backend database connected"))
-.catch((err) => console.log(err));*/
+.catch((err) => console.log(err));
 app.use(express.json());
-
-
 app.use("/auth", authRoutes);
 app.use("/transactions", transactionRoutes);
+app.use("/book", bookRoutes);
+app.use("/reports", reportsRoutes);
 
 app.get("/dashboard", verifyToken, (req, res)=> {
     res.json({ message: `Welcome, ${req.user.username}!` });

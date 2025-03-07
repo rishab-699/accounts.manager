@@ -10,7 +10,7 @@ export default function Card({
         <span className="title-text">{title}</span>
       </div>
       <div className="value">
-        <span className="value-text">&#8377; {value}</span>
+        <span className="value-text">&#8377; {value?value:'-'}</span>
       </div>
       <div className="description">
         <span className="description-text">{description}</span>

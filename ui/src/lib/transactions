@@ -1,0 +1,45 @@
+You **only need to ask for the mode of payment** in the form.  
+
+### **✅ Why?**
+- The **mode of payment** (Cash, Bank, or Credit) automatically determines the second book in double-entry.
+- The **type of transaction** (Dr/Cr) is **already defined** based on the selected book category (e.g., Purchases, Expenses, etc.).
+- This keeps the form **simple and user-friendly**, preventing errors.
+
+---
+
+### **📌 Example: How the Form Should Look**
+| Field Name | Input Type | Required? |
+|------------|-----------|------------|
+| **Date** | Date Picker | ✅ Yes |
+| **Expense Category (Book)** | Dropdown (e.g., Rent, Salaries, Electricity) | ✅ Yes |
+| **Amount** | Number Input | ✅ Yes |
+| **Mode of Payment** | Dropdown (Cash, Bank, Credit) | ✅ Yes |
+| **Party (if Credit is selected)** | Dropdown (e.g., Supplier, Landlord) | ❌ No (Only if Credit) |
+| **Description** | Textarea | ❌ No |
+
+---
+
+### **🚀 How the Backend Decides the Double Entry**
+**User Inputs**:
+```json
+{
+  "book_id": "expensesBookId",
+  "amount": 5000,
+  "payment_mode": "cash",
+  "description": "Electricity Bill Payment"
+}
+```
+**Backend Logic**:
+- **Expense Book → Dr ₹5000**  
+- **Cash Book → Cr ₹5000** (because mode is "cash")  
+
+This ensures **automatic double-entry accounting** without requiring the user to understand accounting concepts.
+
+---
+
+### **🔥 Final Thoughts**
+- **Form remains simple.**
+- **Backend ensures correct double-entry.**
+- **Prevents user confusion & errors.**  
+
+Would you like me to write the actual **form component in React** based on this? 🚀
