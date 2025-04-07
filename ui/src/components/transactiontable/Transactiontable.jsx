@@ -5,6 +5,7 @@ export default function Transactiontable({ transactions }) {
   return (
     <div className="view-transactions">
       <span className="head">Transactions Entries</span>
+      <div className='TableContent'>
       <table>
         <thead>
           <tr>
@@ -31,7 +32,7 @@ export default function Transactiontable({ transactions }) {
           
         </tbody>
       </table>
-
+      </div>
       </div>
   )
 }

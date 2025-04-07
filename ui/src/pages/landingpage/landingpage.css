@@ -1,0 +1,68 @@
+.landingPage{
+    height: 100vh;
+    width: 100vw;
+    & .logo{
+        padding: 12px;
+        display: flex;
+        gap: 16px;
+        align-items: center;
+        height: 120px;
+        width: 120px;
+        max-width: 100%;
+        & img{
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+        & .title{
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: 0.5em;
+            color: rgb(0, 24, 88);
+        }
+    }
+    & .about{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        padding: 12px;
+        & .left{
+            flex: 3;
+            & .authPage{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 12px;
+                & button{
+                    padding: 8px 18px;
+                    font-size: 3rem;
+                    font-weight: 700;
+                    color: white;
+                    background-color: rgb(0, 0, 146);
+                    border: none;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    &:hover{
+                        transform: scale(1.03);
+                        transition: all 0.2s ease;
+                    }
+                    &:active{
+                        transform: scale(1);
+                        transition: all 0.2s ease;
+                    }
+                }
+            }
+        }
+        & .right{
+            flex: 1;
+            height: 450px;
+            width: 300px;
+            & img{
+                height: 100%;
+                width: 100%;
+            }
+        }
+    }
+}

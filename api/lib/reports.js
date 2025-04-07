@@ -46,10 +46,7 @@ async function quickActions(userId){
                     totalAmount: 1
                 }
             }
-        ]);
-        
-        //console.log(currentMonthData);
-        
+        ]);        
 
         return currentMonthData
         

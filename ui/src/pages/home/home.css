@@ -25,77 +25,94 @@
             color: #5d5d5d;
         }
     }
-    & .view-Books{
-        background-color: #fff;
-        padding: 22em;
-        border-radius: 8em;
-        box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
-        -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
-        -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
-        & .head{
-            font-size: 3rem;
-            font-weight: 700;
-            color: #5d5d5d;
-            padding: 12px;
-        }
-        & table{
-            margin-top: 12px;
-            width: 100%;
-            border-radius: 16px;
-            & thead{
-                border-bottom: 8px solid grey;
-                & tr{
-                    background-color: rgb(0, 0, 87);
-                    & th{
-                        padding: 8px 4px;
-                        text-align: center;
-                        border-bottom: 1px solid rgb(255, 255, 255);
-                        font-size: 2.5rem;
-                        font-weight: 600;
-                        color: rgb(255, 255, 255);
-                    }
-                }
+    & .transaction-section{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+        gap: 12px;
+        & .view-Books{
+            flex: 5;
+            background-color: #fff;
+            padding: 22em;
+            border-radius: 8em;
+            box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+            -webkit-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+            -moz-box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.42);
+            height: 500px;
+            & .head{
+                font-size: 3rem;
+                font-weight: 700;
+                color: #5d5d5d;
+                padding: 12px;
             }
-            & tbody{
+            & .tableContent{
                 width: 100%;
-                & tr{
-                    & td{
-                        font-size: 2rem;
-                        font-weight: 600;
-                        color: #1d1d1d;
-                        border-bottom: 1px solid grey;
-                        border-right: 1px solid grey;
-                        padding: 12px 8px;
-                        & .desc{
-                            font-size: 1.5rem;
-                            margin-top: 8px;
-                            & b{
-                                font-size: 1.5rem;
+                height: 400px;
+                overflow-y: auto;
+                & table{
+                    height: 100%;
+                    margin-top: 12px;
+                    width: 100%;
+                    border-radius: 16px;
+                    & thead{
+                        border-bottom: 8px solid grey;
+                        & tr{
+                            background-color: rgb(0, 0, 87);
+                            position: sticky;
+                            top: 0;
+                            & th{
+                                padding: 8px 4px;
+                                text-align: center;
+                                border-bottom: 1px solid rgb(255, 255, 255);
+                                font-size: 2.5rem;
+                                font-weight: 600;
+                                color: rgb(255, 255, 255);
                             }
                         }
-                        &:nth-child(1){
-                            text-align: center;
-                        }
-                        &:nth-child(2){
-                            min-width: 200px;
-                            text-align: left;
-                        }
-                        &:nth-child(3){
-                            text-align: center;
-                        }
+                    }
+                    & tbody{
                         
-                        &:last-child{
-                            border-right: none;
-                            text-align: center;
+                        & tr{
+                            & td{
+                                font-size: 1.8rem;
+                                font-weight: 600;
+                                color: #1d1d1d;
+                                border-bottom: 1px solid grey;
+                                border-right: 1px solid grey;
+                                padding: 4px 4px;
+                                & .desc{    
+                                    font-size: 1.5rem;
+                                    margin-top: 8px;
+                                    & b{
+                                        font-size: 1.5rem;
+                                    }
+                                }
+                                &:nth-child(1){
+                                    text-align: center;
+                                }
+                                &:nth-child(2){
+                                    min-width: 150px;
+                                    text-align: left;
+                                }
+                                &:nth-child(3){
+                                    text-align: center;
+                                }
+                                
+                                &:last-child{
+                                    border-right: none;
+                                    text-align: center;
+                                }
+                            }
+                        }
+                        & tr .no-data{
+                            
+                            font-size: 3rem;
+                            font-weight: 600;
+                            color: #1d1d1d;
+                            padding: 2px 8px;
                         }
                     }
-                }
-                & tr .no-data{
-                    
-                    font-size: 3rem;
-                        font-weight: 600;
-                        color: #1d1d1d;
-                        padding: 2px 8px;
                 }
             }
         }

@@ -11,6 +11,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Context } from './context/Contexts';
 import Register from './components/register/Register'
 import Login from './components/login/Login';
+import Landingpage from './pages/landingpage/Landingpage';
 
 function App() {
   const user = useContext(Context);
@@ -25,12 +26,8 @@ function App() {
 
       <div className="Dashboard">
         {user.user === null? 
-          <div className='authPage'>
-            <button onClick={()=> setVal(1)}>Login</button>
-            <button onClick={()=> setVal(2)}>SignUp</button>
-            {val === 2 && <Register setVal={setVal}/>}
-            {val === 1 && <Login setVal={setVal}/>}
-          </div> :
+          <Landingpage/>
+          :
         
         <BrowserRouter>
         <Sidebar/>

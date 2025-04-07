@@ -103,42 +103,42 @@ export default function Home() {
         </div>
         <div className="salesChart">
         </div>
+        <div className="transaction-section">
           <div className="view-Books">
-          <span className="head">Ledger Books</span>
-          <table>
-            <thead>
-              <tr>
-                <th>sl. no</th>
-                <th>Book Name</th>
-                <th>Balance</th>
-              </tr>
-            </thead>
-            <tbody>
-              {
-                systemBooks.length!==0 ? systemBooks.map((value, index)=>{
-                  return <tr key={index}>
-                    <td>{index+1}</td>
-                  <td>{value.bookname}<br/>
+            <span className="head">Ledger Books</span>
+            <div className="tableContent">
+            <table>
+              <thead>
+                <tr>
+                  <th>sl. no</th>
+                  <th>Book Name</th>
+                  <th>Balance</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  systemBooks.length!==0 ? systemBooks.map((value, index)=>{
+                    return <tr key={index}>
+                      <td>{index+1}</td>
+                    <td>{value.bookname}<br/>
+                      
+                    </td>
+                    <td>{"₹ "+value.balance}</td>
                     
-                  </td>
-                  <td>{"₹ "+value.balance}</td>
-                  
-                  </tr>
-                }): <tr>
-                      <td colSpan="5" className="no-data">No Data Available</td>
                     </tr>
-              }
-              
-            </tbody>
-          </table>
-            
+                  }): <tr>
+                        <td colSpan="5" className="no-data">No Data Available</td>
+                      </tr>
+                }
+                
+              </tbody>
+            </table>
+            </div>
           </div>
-        <div className="transactions-entry">
-          <span className="head">New Transaction</span>
-          <Addtransactions bookDetails={systemBooks}/>
-        </div>
+        
         
         <Transactiontable transactions={transactions}/>
+        </div>
       </>:
       <div className="BookEntryCard">
         <h1>Book Entry</h1>

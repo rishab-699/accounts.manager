@@ -1,4 +1,5 @@
  .view-transactions{
+    flex: 7;
     background-color: #fff;
     padding: 22em;
     border-radius: 8em;
@@ -8,74 +9,89 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
+    height: 500px;
     & .head{
         font-size: 3rem;
         font-weight: 700;
         color: #5d5d5d;
         padding: 12px;
     }
-    & table{
+    & .TableContent{
         width: 100%;
-        border-radius: 16px;
-        & thead{
-            border-bottom: 8px solid grey;
-            & tr{
-                background-color: rgb(0, 0, 87);
-                & th{
-                    padding: 8px 4px;
-                    text-align: center;
-                    border-bottom: 1px solid rgb(255, 255, 255);
-                    font-size: 2.5rem;
-                    font-weight: 600;
-                    color: rgb(255, 255, 255);
+        max-height: 400px;
+        overflow-y: auto;
+        & table{
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            & thead{
+                border-bottom: 8px solid grey;
+                & tr{
+                    position: sticky;
+                    top: 0;
+                    background-color: rgb(0, 0, 87);
+                    & th{
+                        
+                        padding: 8px 4px;
+                        text-align: center;
+                        border-bottom: 1px solid rgb(255, 255, 255);
+                        font-size: 2.5rem;
+                        font-weight: 600;
+                        color: rgb(255, 255, 255);
+                    }
                 }
             }
-        }
-        & tbody{
-            width: 100%;
-            & tr{
-                & td{
-                    font-size: 2rem;
-                    font-weight: 600;
-                    color: #1d1d1d;
-                    border-bottom: 1px solid grey;
-                    border-right: 1px solid grey;
-                    padding: 12px 8px;
-                    & .desc{
-                        font-size: 1.5rem;
-                        margin-top: 8px;
-                        & b{
+            
+            
+            & tbody{
+                width: 100%;
+                & tr{
+                    & td{
+                        font-size: 1.8rem;
+                        font-weight: 600;
+                        color: #1d1d1d;
+                        border-bottom: 1px solid grey;
+                        border-right: 1px solid grey;
+                        padding: 4px 8px;
+                        & .desc{
                             font-size: 1.5rem;
+                            margin-top: 8px;
+                            & b{
+                                font-size: 1.5rem;
+                            }
+                        }
+                        &:nth-child(1){
+                            text-align: center;
+                        }
+                        &:nth-child(3){
+                            min-width: 100px;
+                            font-size: 1.8rem;
+                        }
+                        &:nth-child(2){
+                            text-align: center;
+                            width: fit-content;
+                            font-size: 1.5rem;
+                            min-width: 100px;
+                        }
+                        &:nth-child(){
+                            text-align: center;
+                        }
+                        &:last-child{
+                            border-right: none;
+                            text-align: center;
                         }
                     }
-                    &:nth-child(1){
-                        text-align: center;
-                    }
-                    &:nth-child(3){
-                        min-width: 200px;
-                        font-size: 1.8rem;
-                    }
-                    &:nth-child(2){
-                        text-align: center;
-                        width: fit-content;
-                    }
-                    &:nth-child(){
-                        text-align: center;
-                    }
-                    &:last-child{
-                        border-right: none;
-                        text-align: center;
-                    }
+                }
+                & tr .no-data{
+                    
+                    font-size: 3rem;
+                        font-weight: 600;
+                        color: #1d1d1d;
+                        padding: 2px 8px;
                 }
             }
-            & tr .no-data{
-                
-                font-size: 3rem;
-                    font-weight: 600;
-                    color: #1d1d1d;
-                    padding: 2px 8px;
-            }
+            
         }
     }
 }
