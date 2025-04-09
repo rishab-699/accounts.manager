@@ -3,20 +3,24 @@ import './home.css';
 import axios from 'axios';
 import API from '../../lib/auth';
 import Card from '../../components/card/Card';
-import Addtransactions from '../../components/transactions/Addtransactions';
 import { Context } from '../../context/Contexts';
 import Transactiontable from '../../components/transactiontable/Transactiontable';
+import Barchart from '../../components/barchart/Barchart';
+import Linechart from '../../components/linechart/Linechart';
 
 export default function Home() {
   const [transactions, setTransactions] = useState([]);
   const [systemBooks, setSystemBooks] = useState([]);
   const [checkBooks, setCheckBooks] = useState(true);
   const [quickActionReports, setQuickActionReports] = useState();
+  const [chartData, setChartData] = useState({});
+  const [isfetching, setIsFetching] = useState(false);
 
   const {user} = useContext(Context);
   const {dispatch} = useContext(Context);
   const hasFetched = useRef(false);
   const [balances, setBalances] = useState({});
+  const [chartopt, setChartOpt] = useState('barchart');
   useEffect(()=>{
     if (hasFetched.current) return;
     hasFetched.current = true;
@@ -26,22 +30,34 @@ export default function Home() {
         //console.log(bookData.data);
         
         if(bookData.data.data.length === 0){
+          setIsFetching(true);
           const bookData = await API.get(`/book/${user.user._id}`);
-          const getTransaction = await axios.get(`/transactions/${user.user._id}`);
-          const getQuickReports = await axios.get(`/reports/home/${user.user._id}`);
-          console.log(getQuickReports.data);
-          console.log(bookData.data);
+          const getTransaction = await API.get(`/transactions/${user.user._id}`);
+          const getQuickReports = await API.get(`/reports/home/${user.user._id}`);
+          const getSalesReports = await API.get(`/reports/home/salesReport/${user.user._id}`);
+          //console.log(getQuickReports.data);
+          //console.log(bookData.data);
           await setSystemBooks(bookData.data);
           await setTransactions(getTransaction.data);
           await setQuickActionReports(getQuickReports?.data);
           await setCheckBooks(true);
+          const salesData = getSalesReports.data;
+          const transformedData = {
+            month: salesData.map(item => item.month),
+            totalSales: salesData.map(item => item.totalSales),
+          };
+          setChartData(transformedData);
+          console.log("Transformed Chart Data:", transformedData);
+          setIsFetching(false);
         }else{
           await setSystemBooks(bookData.data.data);
           setCheckBooks(false);
+          setIsFetching(false)
           //console.log(systemBooks); 
         }
       } catch (error) {
           //console.log(error.status);
+          setIsFetching(false)
           if(error.status === 403){
             console.log(error.status);
             dispatch({type: 'LOGOUT'});
@@ -75,6 +91,8 @@ export default function Home() {
     }
   }
   return (
+    <>
+    {!isfetching?
     <div className='Home'>
       {checkBooks?
       <>
@@ -102,6 +120,27 @@ export default function Home() {
           />
         </div>
         <div className="salesChart">
+          <span className="head">Sales Report</span>
+            <select name="chartType" onChange={(e)=>setChartOpt(e.target.value)} id="">
+              <option value="barchart">bar chart</option>
+              <option value="linechart">line chart</option>
+            </select>
+            {chartopt === 'barchart'?
+            <Barchart
+              categories={chartData?.month || []}
+              data={chartData?.totalSales || []}
+              width={600}
+              height={350}
+            />:
+            <Linechart
+              categories={chartData?.month || []}
+              data={chartData?.totalSales || []}
+              width={600}
+              height={350}
+            />
+
+            }
+          
         </div>
         <div className="transaction-section">
           <div className="view-Books">
@@ -163,6 +202,20 @@ export default function Home() {
         </form>
       </div>
       }
-    </div>
+    </div>: <div className="dashboard-skeleton">
+  <div className="skeleton-cards">
+    <div className="skeleton-card shimmer"></div>
+    <div className="skeleton-card shimmer"></div>
+    <div className="skeleton-card shimmer"></div>
+  </div>
+  <div className="skeleton-chart shimmer"></div>
+  <div className="skeleton-table">
+    {[...Array(5)].map((_, i) => (
+      <div className="skeleton-row shimmer" key={i}></div>
+    ))}
+  </div>
+</div>
+    }
+    </>
   )
 }

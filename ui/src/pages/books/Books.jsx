@@ -63,7 +63,7 @@ export default function Books() {
                   </td>
                   <td>{value.type}</td>
                   <td>{"₹ "+value.balance}</td>
-                  <td><button onClick={()=> setSelectedBook(value)}>View Transactions</button></td>
+                  <td><button className='transactionButton' onClick={()=> setSelectedBook(value)}>View Transactions</button></td>
                   </tr>
                 }): <tr>
                       <td colSpan="5" className="no-data">No Data Available</td>
@@ -76,7 +76,7 @@ export default function Books() {
           </div>
         </div>
         :
-        <Booktable selectedbook={selectedBook}/>
+        <Booktable selectedbook={selectedBook} setSelectedBook={setSelectedBook}/>
       }
     </>
   )

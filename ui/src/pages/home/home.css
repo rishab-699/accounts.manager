@@ -12,7 +12,7 @@
         gap: 64em;
     }
     
-    & .transactions-entry, .book-entry, .BookEntryCard{
+    & .transactions-entry, .book-entry, .BookEntryCard, .salesChart{
         background-color: #fff;
         padding: 22em;
         border-radius: 8em;
@@ -23,6 +23,16 @@
             font-size: 2rem;
             font-weight: 700;
             color: #5d5d5d;
+        }
+    }
+    & .salesChart{
+        position: relative;
+        & select{
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            padding: 8px 12px;
         }
     }
     & .transaction-section{
@@ -192,3 +202,74 @@
     border-radius: 50%;
     background-color: greenyellow;
 }
+
+.loader {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center;
+  }
+  
+  .dashboard-skeleton {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .skeleton-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  
+  .skeleton-card {
+    height: 120px;
+    width: 30%;
+    border-radius: 10px;
+    background-color: #eee;
+  }
+  
+  .skeleton-chart {
+    height: 300px;
+    width: 100%;
+    border-radius: 12px;
+    background-color: #eee;
+  }
+  
+  .skeleton-table {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .skeleton-row {
+    height: 40px;
+    width: 100%;
+    border-radius: 6px;
+    background-color: #eee;
+  }
+  
+  .shimmer {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150px;
+    height: 100%;
+    width: 150px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    animation: shimmer 1.2s infinite;
+  }
+  
+  @keyframes shimmer {
+    100% {
+      transform: translateX(100%);
+    }
+  }
+  

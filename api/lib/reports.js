@@ -54,5 +54,79 @@ async function quickActions(userId){
         return false
     }
 }
-
-module.exports = {quickActions}
+async function salesChart(userId){
+    try {
+        const monthlySales = await Transaction.aggregate([
+            {
+              $match: {
+                userId: new mongoose.Types.ObjectId(userId),
+                date: {
+                  $gte: new Date(new Date().getFullYear(), new Date().getMonth() - 6, 1), // last 6 months
+                  $lte: new Date()
+                }
+              }
+            },
+            {
+              $lookup: {
+                from: 'books',
+                localField: 'BookId',
+                foreignField: '_id',
+                as: 'book'
+              }
+            },
+            { $unwind: '$book' },
+            {
+              $match: {
+                'book.type': 'sales'
+              }
+            },
+            {
+              $addFields: {
+                month: { $month: '$date' },
+                year: { $year: '$date' }
+              }
+            },
+            {
+              $group: {
+                _id: {
+                  year: '$year',
+                  month: '$month'
+                },
+                totalSales: {
+                  $sum: {
+                    $cond: [
+                      { $eq: ["$type", "dr"] },
+                      "$amount",
+                      { $multiply: ["$amount", -1] }
+                    ]
+                  }
+                }
+              }
+            },
+            {
+              $sort: {
+                '_id.year': 1,
+                '_id.month': 1
+              }
+            },
+            {
+              $project: {
+                _id: 0,
+                month: {
+                  $concat: [
+                    { $toString: '$_id.month' },
+                    '-',
+                    { $toString: '$_id.year' }
+                  ]
+                },
+                totalSales: 1
+              }
+            }
+          ]);
+          console.log(monthlySales);
+          return monthlySales;
+    } catch (error) {
+        return false
+    }
+}
+module.exports = {quickActions, salesChart}

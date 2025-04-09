@@ -11,12 +11,25 @@
     align-items: center;
     justify-content: start;
     height: 500px;
-    & .head{
-        font-size: 3rem;
-        font-weight: 700;
-        color: #5d5d5d;
-        padding: 12px;
+    & .headerSection{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        text-align: left;
+        & .head{
+            font-size: 3rem;
+            font-weight: 700;
+            color: #5d5d5d;
+            padding: 12px;
+        }
+        & input{
+            font-size: 1.8rem;
+            color: #5d5d5d;
+            font-weight: 700;
+        }
     }
+    
     & .TableContent{
         width: 100%;
         max-height: 400px;

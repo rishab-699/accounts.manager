@@ -27,7 +27,28 @@ router.get('/home/:id', async (req, res) => {
         }
     }
 });
+router.get('/home/salesReport/:id', async(req,res)=>{
+    try {
+        //console.log("Received request for ID:", req.params.id);
 
+        const getData = await reports.salesChart(req.params.id);
+        if (!getData || getData.length === 0) {
+            //console.log("No data found, sending 400 response");
+            return res.status(400).json({ message: 'No sales data found!' });
+        }
+
+        console.log("Sending 200 response with data");
+        console.log(getData);
+        res.status(200).json(getData);
+
+    } catch (error) {
+        //console.error("Error fetching book data:", error);
+        
+        if (!res.headersSent) {  // Ensure response is not sent twice
+            return res.status(500).json({ message: 'Internal Server Error!' });
+        }
+    }
+})
 
 
 module.exports = router;

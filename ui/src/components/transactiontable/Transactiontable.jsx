@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './transactiontable.css'
 
 export default function Transactiontable({ transactions }) {
+  const [date, setDate] = useState(new Date().toISOString().split('T')[0]);
   return (
     <div className="view-transactions">
-      <span className="head">Transactions Entries</span>
+      <div className="headerSection">
+        <span className="head">Transactions Entries</span>
+        <input type="date" name='transactionDate' value={date} onChange={(e)=> setDate(e.target.value)} />
+      </div>
+      
       <div className='TableContent'>
       <table>
         <thead>
@@ -19,7 +24,7 @@ export default function Transactiontable({ transactions }) {
         <tbody>
           {
             transactions.length!==0 ? transactions.map((value, index)=>{
-              return <tr key={index}>
+              return value.date.split("T")[0] === date && <tr key={index}>
                 <td>{index+1}</td>
               <td>{value.date.split("T")[0]}</td>
               <td>{value.debitBookName}</td>

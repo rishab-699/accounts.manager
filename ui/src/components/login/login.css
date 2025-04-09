@@ -22,10 +22,10 @@
         justify-content: center;
         & .CloseBtn{
             padding: 0;
+            background-color: rgba(255, 255, 255, 0) !important;
             font-size: 5rem;
             font-weight: 600;
-            color: #5d5d5d;
-            background-color: rgba(255, 255, 255, 0);
+            color: #5d5d5d !important;
             border: none;
             position: absolute;
             right: 10px;
